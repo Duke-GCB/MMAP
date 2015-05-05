@@ -35,7 +35,7 @@ class RunBlast(RunComponent):
     run BLAST
 
     """
-    def __init__(self, infile, pdir, wdir=None, outfile=None, check_exist=True, seg='yes', e_value='1e-15', blast_db=None):
+    def __init__(self, infile, pdir, wdir=None, outfile=None, check_exist=True, seg=None, e_value='1e-15', blast_db=None):
         """
 
         :param infile: The input sequence to blast
@@ -50,7 +50,7 @@ class RunBlast(RunComponent):
         """
         self.all_exts = ALL_EXTS
         self.e_value = e_value
-        self.seg = seg
+        self.seg = seg or "yes"
         self.blast_db = blast_db
         self.parameter_check(pdir, wdir, infile, outfile, check_exist, ".csv")
         self.intermediate_file = infile + INT_FILE_EXT
