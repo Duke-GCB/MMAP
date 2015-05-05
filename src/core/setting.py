@@ -30,7 +30,7 @@ list_optional_shared = ["checkExist"]
 list_optional_metasim_only = ["metasim_outfile"]
 list_optional_genovo_only = ["genovo_outfile", "genovo_noI", "genovo_thresh"]
 list_optional_glimmer_only = ["glimmer_infile", "glimmer_outfile"]
-list_optional_blast_only = ["blast_infile", "blast_batch_size", "blast_e_value", "blast_outfile"]
+list_optional_blast_only = ["blast_infile", "blast_batch_size", "blast_e_value", "blast_seg", "blast_outfile"]
 list_optional_mine_only = [ "mine_comparison_style", "mine_cv", "mine_exp", "mine_clumps", "mine_jobID"]
 list_optional_internal_only = ["master_tag"]
 
