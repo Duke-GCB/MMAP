@@ -54,7 +54,7 @@ class RunBlast(RunComponent):
         self.blast_db = blast_db
         self.parameter_check(pdir, wdir, infile, outfile, check_exist, ".csv")
         self.intermediate_file = infile + INT_FILE_EXT
-        self.blastx = runExtProg(BLASTX, pdir=self.pdir, length=10, check_OS=True)
+        self.blastx = runExtProg(BLASTX, pdir=self.pdir, length=12, check_OS=True)
         # step 2 is a python script.
         self.init_prog()
 
