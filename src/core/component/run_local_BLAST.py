@@ -25,15 +25,17 @@ OUT_SWITCH_POSITION = 5         # -out
 OUTFILE_POSITION = 6
 EVALUE_SWITCH_POSITION = 7      # -evalue
 EVALUE_POSITION = 8
-OUTFMT_SWITCH_POSITION = 9      # -outfmt
-OUTFMT_POSITION = 10
+SEG_SWITCH_POSITION = 9         # -seg
+SEG_POSITION = 10
+OUTFMT_SWITCH_POSITION = 11     # -outfmt
+OUTFMT_POSITION = 12
 
 class RunBlast(RunComponent):
     """
     run BLAST
 
     """
-    def __init__(self, infile, pdir, wdir=None, outfile=None, check_exist=True, e_value='1e-15', blast_db=None):
+    def __init__(self, infile, pdir, wdir=None, outfile=None, check_exist=True, seg=None, e_value='1e-15', blast_db=None):
         """
 
         :param infile: The input sequence to blast
@@ -42,15 +44,17 @@ class RunBlast(RunComponent):
         :param outfile: output file to write csv summary
         :param check_exist: check if files exist
         :param e_value: threshhold to provide to blast
+        :param seg: perform SEG filtering
         :param blast_db: the local NCBI formatted blast databae
         :return: an initialized RunBlast
         """
         self.all_exts = ALL_EXTS
         self.e_value = e_value
+        self.seg = seg or "yes"
         self.blast_db = blast_db
         self.parameter_check(pdir, wdir, infile, outfile, check_exist, ".csv")
         self.intermediate_file = infile + INT_FILE_EXT
-        self.blastx = runExtProg(BLASTX, pdir=self.pdir, length=10, check_OS=True)
+        self.blastx = runExtProg(BLASTX, pdir=self.pdir, length=12, check_OS=True)
         # step 2 is a python script.
         self.init_prog()
 
@@ -66,6 +70,7 @@ class RunBlast(RunComponent):
                     outfile=setting.get("blast_outfile"),
                     check_exist=setting.get("check_exist"),
                     e_value=setting.get("blast_e_value"),
+                    seg=setting.get("blast_seg"),
                     blast_db=setting.get("blast_db"))
         return blast
 
@@ -88,6 +93,8 @@ class RunBlast(RunComponent):
         self.blastx.set_param_at(self.intermediate_file, OUTFILE_POSITION)
         self.blastx.set_param_at('-evalue', EVALUE_SWITCH_POSITION)
         self.blastx.set_param_at(self.e_value, EVALUE_POSITION)
+        self.blastx.set_param_at('-seg', SEG_SWITCH_POSITION)
+        self.blastx.set_param_at(self.seg, SEG_POSITION)
         self.blastx.set_param_at('-outfmt', OUTFMT_SWITCH_POSITION)
         self.blastx.set_param_at(BLASTX_OUTFMT, OUTFMT_POSITION)
 
